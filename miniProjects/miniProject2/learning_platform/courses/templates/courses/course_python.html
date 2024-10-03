@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Course</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: white;
+            font-family: 'Arial', sans-serif;
+            transition: background-color 0.5s, color 0.5s;
+        }
+
+        .dark-theme {
+            background: #222;
+            color: #fff;
+        }
+
+        .user-greeting {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #343a40;
+        }
+
+        .dark-theme .user-greeting {
+            color: #f8f9fa;
+        }
+
+        .sidebar {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+            position: fixed;
+            width: 250px;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            overflow-y: auto;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+
+        .dark-theme .sidebar {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .content-area {
+            margin-left: 270px;
+            padding: 20px;
+        }
+
+        .toggle-btn {
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            z-index: 1001;
+        }
+
+        .sidebar h4 {
+            margin-bottom: 15px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin: 10px 0;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #007bff;
+            transition: color 0.3s;
+        }
+
+        .sidebar ul li a:hover {
+            color: #0056b3;
+        }
+
+        .dark-theme .sidebar ul li a {
+            color: #66ff66;
+        }
+
+        .dark-theme .sidebar ul li a:hover {
+            color: #99ff99;
+        }
+
+        .content-area h1 {
+            margin-top: 0;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 1001;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <!-- <div class="user-greeting">Hello, {{ user.username }}!</div> -->
+        <button class="btn btn-secondary toggle-btn" onclick="toggleSidebar()">Menu</button>
+        <button class="btn btn-primary theme-toggle" onclick="toggleTheme()">Switch Theme</button>
+        
+        <div class="sidebar" id="sidebar">
+            <br><br>
+            <h4>Python Course Menu</h4>
+            <ul>
+                <li><a href="#" onclick="loadContent('intro')">Introduction</a></li>
+                <li><a href="#" onclick="loadContent('data_types')">Data Types</a></li>
+                <li><a href="#" onclick="loadContent('control_structures')">Control Structures</a></li>
+                <li><a href="#" onclick="loadContent('functions')">Functions</a></li>
+                <li><a href="#" onclick="loadContent('data_structures')">Data Structures</a></li>
+                <li><a href="#" onclick="loadContent('file_handling')">File Handling</a></li>
+                <li><a href="#" onclick="loadContent('libraries')">Popular Libraries</a></li>
+                <li><a href="#" onclick="loadContent('oop')">Object-Oriented Programming</a></li>
+                <li><a href="#" onclick="loadContent('advanced')">Advanced Topics</a></li>
+            </ul>
+        </div>
+        
+        <div class="content-area">
+            <h1>Python Course Content</h1>
+            <p id="course-content">Welcome to the Python course! Click on the menu items to load the content.</p>
+            <a href="{% url 'main_page' %}" class="btn btn-primary">Back to Main Page</a>
+        </div>
+    </div>
+
+    <script>
+        // Function to toggle theme and store the selection in localStorage
+        function toggleTheme() {
+            const isDark = document.body.classList.toggle('dark-theme');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        }
+
+        // Function to load the saved theme when the page loads
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-theme');
+            }
+        }
+
+        // Call loadTheme when the page is loaded
+        window.onload = loadTheme;
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.style.display = (sidebar.style.display === 'none' || sidebar.style.display === '') ? 'block' : 'none';
+        }
+
+        // Function to load detailed content based on the selected topic
+        function loadContent(topic) {
+            let content = '';
+            switch(topic) {
+                case 'intro':
+                    content = `
+                        <h2>Introduction to Python</h2>
+                        <p>Python is a high-level, interpreted, and general-purpose programming language. It emphasizes readability with its clean syntax, making it a popular choice for beginners and professionals alike. Python supports multiple programming paradigms, including procedural, object-oriented, and functional programming.
+                        Python was created by Guido van Rossum and first released in 1991. It is widely used in various fields such as web development, data analysis, artificial intelligence, scientific computing, and more.</p>
+
+                        <h3>Key Features of Python</h3>
+                        <ul>
+                            <li><strong>Readability</strong>: Python's syntax is designed to be clean and easy to understand, which helps programmers write code quickly.</li>
+                            <li><strong>Extensive Libraries</strong>: Python has a rich ecosystem of libraries and frameworks that allow developers to accomplish a wide range of tasks efficiently.</li>
+                            <li><strong>Cross-Platform</strong>: Python is compatible with various operating systems, making it a flexible choice for developers.</li>
+                            <li><strong>Strong Community Support</strong>: Python has a large and active community that contributes to its development and provides extensive documentation, tutorials, and forums for assistance.</li>
+                            <li><strong>Dynamic Typing</strong>: Python uses dynamic typing, meaning you don't have to explicitly declare variable types, allowing for quicker coding.</li>
+                        </ul>
+
+                        <h3>Popular Applications of Python</h3>
+                        <ul>
+                            <li><strong>Web Development</strong>: Frameworks like Django and Flask enable developers to build robust web applications quickly.</li>
+                            <li><strong>Data Science</strong>: Libraries like Pandas, NumPy, and Matplotlib make data analysis and visualization straightforward and efficient.</li>
+                            <li><strong>Machine Learning</strong>: Python supports various machine learning libraries such as TensorFlow, Keras, and Scikit-learn.</li>
+                            <li><strong>Game Development</strong>: Libraries like Pygame allow for the creation of games and interactive applications.</li>
+                            <li><strong>Scripting and Automation</strong>: Python is often used for writing scripts to automate repetitive tasks, making it a valuable tool for system administrators.</li>
+                        </ul>
+
+                        <h3>Getting Started with Python</h3>
+                        <p>To start programming in Python, you'll need to install it on your computer. You can download the latest version from the official Python website: <a href="https://www.python.org/downloads/" target="_blank">python.org</a>. Additionally, popular code editors such as Visual Studio Code, PyCharm, and Jupyter Notebook can enhance your coding experience.</p>`;
+
+                    break;
+                case 'data_types':
+                    content = `
+                        <h2>Python Data Types</h2>
+                        <p>Python supports a variety of built-in data types:</p>
+                        <ul>
+                            <li><strong>int</strong> - Integer numbers, e.g., 1, 2, 100</li>
+                            <li><strong>float</strong> - Floating point numbers, e.g., 1.5, 3.14</li>
+                            <li><strong>str</strong> - Strings, used for representing text, e.g., "hello"</li>
+                            <li><strong>bool</strong> - Boolean values, either True or False</li>
+                            <li><strong>list</strong> - Ordered collections of items, e.g., [1, 2, 3]</li>
+                            <li><strong>tuple</strong> - Immutable ordered collections, e.g., (1, 2, 3)</li>
+                            <li><strong>dict</strong> - Dictionary, stores key-value pairs, e.g., {"name": "John", "age": 25}</li>
+                        </ul>`;
+                    break;
+                case 'control_structures':
+                    content = `
+                        <h2>Control Structures in Python</h2>
+                        <p>Control structures help to manage the flow of the program:</p>
+                        <ul>
+                            <li><strong>if-elif-else</strong> - Conditional statements for decision making.</li>
+                            <li><strong>for</strong> - Used for iterating over a sequence (e.g., list, tuple, string).</li>
+                            <li><strong>while</strong> - Loops while a condition is true.</li>
+                            <li><strong>break</strong> - Exits a loop.</li>
+                            <li><strong>continue</strong> - Skips the current iteration of a loop.</li>
+                        </ul>`;
+                    break;
+                case 'functions':
+                    content = `
+                        <h2>Functions in Python</h2>
+                        <p>Functions are blocks of reusable code that perform a specific task:</p>
+                        <ul>
+                            <li><strong>def</strong> - Defines a function.</li>
+                            <li><strong>Parameters</strong> - Passed to a function to customize its behavior.</li>
+                            <li><strong>Return</strong> - Returns a value from the function.</li>
+                            <li>Python also supports <strong>lambda</strong> functions (anonymous functions).</li>
+                        </ul>`;
+                    break;
+                case 'data_structures':
+                    content = `
+                        <h2>Data Structures in Python</h2>
+                        <p>Python provides several built-in data structures:</p>
+                        <ul>
+                            <li><strong>Lists</strong> - Mutable, ordered collections of items.</li>
+                            <li><strong>Tuples</strong> - Immutable, ordered collections.</li>
+                            <li><strong>Sets</strong> - Unordered collections of unique elements.</li>
+                            <li><strong>Dictionaries</strong> - Store key-value pairs.</li>
+                        </ul>`;
+                    break;
+                case 'file_handling':
+                    content = `
+                        <h2>File Handling in Python</h2>
+                        <p>Python allows easy file operations:</p>
+                        <ul>
+                            <li><strong>open()</strong> - Opens a file.</li>
+                            <li><strong>read()</strong> - Reads the content of a file.</li>
+                            <li><strong>write()</strong> - Writes to a file.</li>
+                            <li><strong>close()</strong> - Closes the file after operations.</li>
+                        </ul>`;
+                    break;
+                case 'libraries':
+                    content = `
+                        <h2>Popular Python Libraries</h2>
+                        <p>Python has a vast collection of libraries:</p>
+                        <ul>
+                            <li><strong>NumPy</strong> - For numerical computing.</li>
+                            <li><strong>Pandas</strong> - For data manipulation and analysis.</li>
+                            <li><strong>Matplotlib</strong> - For data visualization.</li>
+                            <li><strong>TensorFlow</strong> - For machine learning and AI.</li>
+                        </ul>`;
+                    break;
+                case 'oop':
+                    content = `
+                        <h2>Object-Oriented Programming (OOP) in Python</h2>
+                        <p>OOP in Python allows for organizing code around objects:</p>
+                        <ul>
+                            <li><strong>Class</strong> - Blueprint for creating objects.</li>
+                            <li><strong>Object</strong> - Instance of a class.</li>
+                            <li><strong>Inheritance</strong> - Allows a class to inherit methods and properties from another class.</li>
+                            <li><strong>Encapsulation</strong> - Hides the internal implementation of a class.</li>
+                            <li><strong>Polymorphism</strong> - Allows different classes to be treated as instances of the same class through inheritance.</li>
+                        </ul>`;
+                    break;
+                case 'advanced':
+                content = `
+                        <h2>Advanced Python Topics</h2>
+                        <p>Python offers advanced programming concepts that enhance its capabilities and allow for more efficient coding. Here are some of the key advanced topics:</p>
+                        <ul>
+                            <li><strong>Decorators</strong> - Functions that modify other functions. They can be used to add functionality or modify behavior without changing the actual function code. For example, decorators are often used for logging, access control, and caching.</li>
+                            
+                            <li><strong>Generators</strong> - Functions that yield values and maintain their state. They allow for lazy evaluation, meaning values are generated on the fly, which is memory efficient. Generators are particularly useful for iterating over large datasets.</li>
+
+                            <li><strong>Context Managers</strong> - Handle resource management with <strong>with</strong> statements. They ensure proper allocation and deallocation of resources, such as file handles or database connections, making code cleaner and less error-prone.</li>
+
+                            <li><strong>Metaclasses</strong> - Classes of classes that define how classes behave. Metaclasses allow for customization of class creation and can be used to enforce rules or modify class attributes dynamically.</li>
+
+                            <li><strong>Asyncio</strong> - A library used for writing concurrent code using the async/await syntax. It helps manage multiple tasks at once without using threads or processes, making it ideal for I/O-bound operations such as web scraping or handling multiple network requests.</li>
+
+                            <li><strong>Type Hinting</strong> - A feature introduced in Python 3.5 that allows developers to indicate the expected data types of function arguments and return values. Type hinting helps improve code readability and aids in debugging by catching type-related errors early.</li>
+
+                            <li><strong>Descriptors</strong> - A powerful mechanism to customize attribute access in classes. Descriptors allow for the creation of reusable attributes and provide fine-grained control over how attributes are set and retrieved.</li>
+
+                            <li><strong>Function Annotations</strong> - Python allows you to attach metadata to function arguments and return values using annotations. This can be useful for documentation purposes and can be processed using the <code>inspect</code> module or other tools.</li>
+                        </ul>`;
+
+                    break;
+                default:
+                    content = "<p>Please select a topic from the menu.</p>";
+            }
+            document.getElementById('course-content').innerHTML = content;
+        }
+    </script>
+</body>
+</html>

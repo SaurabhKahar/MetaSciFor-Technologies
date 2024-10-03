@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C++ Course</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: white;
+            font-family: 'Arial', sans-serif;
+            transition: background-color 0.5s, color 0.5s; /* Smooth transition for background and text color */
+        }
+
+        .dark-theme {
+            background: #222; /* Dark background */
+            color: #fff; /* Light text color */
+        }
+
+        .user-greeting {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #343a40;
+        }
+
+        .dark-theme .user-greeting {
+            color: #f8f9fa; /* Light text for greeting in dark theme */
+        }
+
+        .sidebar {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            display: none; /* Hidden by default */
+            position: fixed; /* Fixed sidebar */
+            width: 250px;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000; /* On top of other elements */
+            overflow-y: auto; /* Scroll if needed */
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1); /* Add shadow for depth */
+        }
+
+        .dark-theme .sidebar {
+            background-color: #333; /* Dark background for sidebar */
+            color: #fff; /* Light text color for sidebar */
+        }
+
+        .content-area {
+            margin-left: 270px; /* Leave space for the sidebar */
+            padding: 20px; /* Add padding for content */
+        }
+
+        .toggle-btn {
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            z-index: 1001; /* On top of sidebar */
+        }
+
+        .sidebar h4 {
+            margin-bottom: 15px; /* Space below the heading */
+        }
+
+        .sidebar ul {
+            list-style-type: none; /* Remove default list style */
+            padding: 0; /* Remove default padding */
+        }
+
+        .sidebar ul li {
+            margin: 10px 0; /* Space between items */
+        }
+
+        .sidebar ul li a {
+            text-decoration: none; /* Remove underline */
+            color: #007bff; /* Bootstrap primary color */
+            transition: color 0.3s; /* Smooth transition for hover */
+        }
+
+        .sidebar ul li a:hover {
+            color: #0056b3; /* Darker color on hover */
+        }
+
+        .dark-theme .sidebar ul li a {
+            color: #66ff66; /* Neon green for links in dark theme */
+        }
+
+        .dark-theme .sidebar ul li a:hover {
+            color: #99ff99; /* Light neon green on hover in dark theme */
+        }
+
+        .content-area h1 {
+            margin-top: 0; /* Remove default top margin */
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 1001; /* On top of other elements */
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <!-- <div class="user-greeting">Hello, {{ user.username }}!</div> -->
+        <button class="btn btn-secondary toggle-btn" onclick="toggleSidebar()">Menu</button>
+        <button class="btn btn-primary theme-toggle" onclick="toggleTheme()">Switch Theme</button>
+        
+        <div class="sidebar" id="sidebar">
+            <br><br>
+            <h4>C++ Course Menu</h4>
+            <ul>
+                <li><a href="#" onclick="loadContent('intro')">Introduction</a></li>
+                <li><a href="#" onclick="loadContent('data_types')">Data Types</a></li>
+                <li><a href="#" onclick="loadContent('control_structures')">Control Structures</a></li>
+                <li><a href="#" onclick="loadContent('functions')">Functions</a></li>
+                <li><a href="#" onclick="loadContent('oop')">Object-Oriented Programming</a></li>
+                <li><a href="#" onclick="loadContent('advanced')">Advanced Topics</a></li>
+            </ul>
+        </div>
+        
+        <div class="content-area">
+            <h1>C++ Course Content</h1>
+            <p id="course-content">Welcome to the C++ course! Click on the menu items to load the content.</p>
+            <a href="{% url 'main_page' %}" class="btn btn-primary">Back to Main Page</a>
+        </div>
+    </div>
+
+    <script>
+        // Function to toggle theme and store the selection in localStorage
+        function toggleTheme() {
+            const isDark = document.body.classList.toggle('dark-theme'); // Toggle the dark theme class
+            localStorage.setItem('theme', isDark ? 'dark' : 'light'); // Store the theme preference
+        }
+
+        // Function to load the saved theme when the page loads
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-theme'); // Apply the dark theme if saved
+            }
+        }
+
+        // Call loadTheme when the page is loaded
+        window.onload = loadTheme;
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.style.display = (sidebar.style.display === 'none' || sidebar.style.display === '') ? 'block' : 'none';
+        }
+
+        function loadContent(topic) {
+            let content = '';
+            switch(topic) {
+                case 'intro':
+                    content = "<h2>What is C++?</h2> <p>C++ is a cross-platform language that can be used to create high-performance applications. <br>C++ was developed by Bjarne Stroustrup, as an extension to the C language. <br>C++ gives programmers a high level of control over system resources and memory. <br>The language was updated 5 major times in 2011, 2014, 2017, 2020, and 2023 to C++11, C++14, C++17, C++20, and C++23.</p> <h2>Why Use C++</h2> <p>C++ is one of the world's most popular programming languages. <br> C++ can be found in today's operating systems, Graphical User Interfaces, and embedded systems. <br>C++ is an object-oriented programming language which gives a clear structure to programs and allows code to be reused, lowering development costs. <br> C++ is portable and can be used to develop applications that can be adapted to multiple platforms. <br>C++ is fun and easy to learn!<br>As C++ is close to C, C# and Java, it makes it easy for programmers to switch to C++ or vice versa.";
+                    break;
+                case 'data_types':
+                    content = '<h2>Basic Data Types</h2><p>C++ offers several fundamental types, including:</p><ul><li><strong>int</strong>: Used for integers (whole numbers).</li><li><strong>float</strong>: Used for floating-point numbers (decimals).</li><li><strong>double</strong>: Used for double-precision floating-point numbers.</li><li><strong>char</strong>: Used for characters.</li><li><strong>bool</strong>: Used for boolean values (true or false).</li></ul>';
+                    break;
+                case 'control_structures':
+                    content = '<h2>Control Structures</h2><p>Control structures allow you to control the flow of your program. Common control structures in C++ include:</p><ul><li><strong>if statement:</strong> Executes a block of code if a specified condition is true. <code>if (a &gt; 0) { cout &lt;&lt; "Positive"; }</code> – This checks if the value of <code>a</code> is greater than 0.</li><li><strong>else if/else statement:</strong> Executes another block of code if the previous condition is false. <code>if (a &gt; 0) { cout &lt;&lt; "Positive"; } else if (a &lt; 0) { cout &lt;&lt; "Negative"; }</code> – This checks for both positive and negative values.</li><li><strong>switch statement:</strong> Selects one of many code blocks to execute. <code>switch (day) { case 1: cout &lt;&lt; "Monday"; break; }</code> – Executes the block for Monday if day is 1.</li></ul>';
+                    break;
+                case 'functions':
+                    content = '<h2>Functions in C++</h2><p>A function is a block of code that performs a specific task. Functions help to break programs into smaller, manageable pieces. <br>Here is how you can define a function in C++:</p><pre><code>return_type function_name(parameter_list) {<br>    // body of the function<br>}</code></pre><p><strong>Example:</strong> A simple function that adds two numbers:</p><pre><code>int add(int a, int b) {<br>    return a + b;<br>}</code></pre>';
+                    break;
+                case 'oop':
+                    content = '<h2>Object-Oriented Programming (OOP) in C++</h2><p>OOP is a programming paradigm based on the concept of "objects". An object can represent a person, a bank account, a car, etc. The key features of OOP include:</p><ul><li><strong>Encapsulation:</strong> Bundling data with methods that operate on that data.</li><li><strong>Inheritance:</strong> Creating new classes from existing classes.</li><li><strong>Polymorphism:</strong> The ability to present the same interface for different data types.</li></ul><p><strong>Example of a class:</strong></p><pre><code>class Car {<br>public:<br>    string brand;<br>    void honk() {<br>        cout &lt;&lt; "Beep! Beep!";<br>    }<br>};</code></pre>';
+                    break;
+                case 'advanced':
+                    content = '<h2>Advanced C++ Topics</h2><p>Some advanced topics in C++ include:</p><ul><li><strong>Templates:</strong> Allows functions and classes to operate with generic types.</li><li><strong>Standard Template Library (STL):</strong> A powerful set of C++ template classes to provide general-purpose classes and functions.</li><li><strong>Exception Handling:</strong> Mechanism to handle runtime errors.</li></ul>';
+                    break;
+                default:
+                    content = "<p>Please select a topic from the menu.</p>";
+            }
+            document.getElementById('course-content').innerHTML = content;
+        }
+    </script>
+</body>
+</html>
