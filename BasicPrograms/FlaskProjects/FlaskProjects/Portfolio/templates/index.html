@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<section class="intro">
+    <h2>Hi, I'm Saurabh Kahar</h2>
+    <p>Aspiring IT Professional with expertise in Cloud Computing, Big Data, and Artificial Intelligence.</p>
+</section>
+
+<section class="highlights">
+    <h2>Skills & Expertise</h2>
+    <ul>
+        <li>Python</li>
+        <li>Cloud-Based Solutions</li>
+        <li>Machine Learning & AI</li>
+        <li>Data Analytics & Visualization</li>
+        <li>Web Development</li>
+    </ul>
+    <hr>
+    <a href="{{ url_for('projects') }}" class="btn">View My Work</a>
+</section>
+{% endblock %}

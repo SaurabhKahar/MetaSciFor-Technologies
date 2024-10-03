@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Projects{% endblock %}
+
+{% block content %}
+<section class="projects">
+    <h2>My Projects</h2>
+    <div class="project">
+        <img src="{{ url_for('static', filename='images/project1.png') }}" alt="Project 1">
+        <h3>Cloud-Based Image Processing Application</h3>
+        <p>
+            Developed a cloud-based platform for real-time image processing, utilizing AWS and Python 
+            to perform tasks such as facial recognition and medical image analysis. This project 
+            demonstrates my ability to integrate cloud computing with machine learning techniques 
+            to deliver scalable solutions.
+        </p>
+    </div>
+    <div class="project">
+        <img src="{{ url_for('static', filename='images/project2.png') }}" alt="Project 2">
+        <h3>AI-Powered Predictive Analytics Tool</h3>
+        <p>
+            Created a predictive analytics tool that uses machine learning algorithms to forecast 
+            business trends. The tool was designed to help companies make data-driven decisions 
+            by analyzing historical data and providing actionable insights. This project showcases 
+            my expertise in data science and AI.
+        </p>
+    </div>
+    <div class="project">
+        <img src="{{ url_for('static', filename='images/project3.png') }}" alt="Project 3">
+        <h3>Blockchain-Based Secure Voting System</h3>
+        <p>
+            Designed a secure voting system using blockchain technology to ensure transparency 
+            and integrity in the voting process. This project highlights my understanding of 
+            blockchain principles and my ability to apply them to real-world problems.
+        </p>
+    </div>
+</section>
+{% endblock %}
